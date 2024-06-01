@@ -9,7 +9,7 @@ from config import ADMIN_CHAT_ID, greet_kb, admin_kb
 router = Router()
 
 
-@router.message(Command("start"))
+@router.message(Command("start", ignore_case=True, ignore_mention=True))
 async def cmd_start(message: Message):
     """
     Handles the "start" command message.

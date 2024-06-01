@@ -4,13 +4,19 @@
 from aiogram import Router, F
 from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
+from aiogram.filters import Command, or_f
 from config import bot, FEEDBACK_TEXT, SCORES_VARIANTS
 from common import MakeFeedback, send_admin_message
 
 router = Router()
 
 
-@router.message(F.text == FEEDBACK_TEXT)
+# alternative way for combinig "OR"
+# @router.message(Command(commands=["feedback"]))
+# @router.message(F.text == FEEDBACK_TEXT)
+@router.message(
+    or_f(Command(commands=["feedback"], ignore_case=True),
+         F.text == FEEDBACK_TEXT))
 async def cmd_feedback(message: Message, state: FSMContext):
     """
     Handles the "feedback" command message.
